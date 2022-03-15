@@ -11,10 +11,41 @@ const GET = async (request, response) => {
 }
 
 
-const POST = (request, response) => {
+const POST = async (request, response) => {
 	try {
-		console.log(request.files)
-		console.log(request.body)
+		if(!request.files) return;
+
+		const User = await request.models.User
+
+		const { file } = request.files
+		const { name, username, password } = request.body
+
+		const user_profile_img = file.name.replace(/\s/g, '')
+
+		const newUser = {
+			name,
+			username,
+			password,
+			user_profile_img
+		}
+
+		const user = User.build(newUser)
+
+		const res = await user.save()
+		if(res.dataValues){
+			delete res.dataValues.password
+			response.json({
+				status: 201,
+				message: 'User successfully registered!',
+				data: res.dataValues
+			})
+		} else {
+			response.json({
+				status: 400,
+				message: 'User not successfully registered!',
+				data: null
+			})
+		}
 
 	} catch(error) {
 		console.log(error)

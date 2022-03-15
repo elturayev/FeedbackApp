@@ -2,7 +2,7 @@
   "name": "feedbackapp",
   "version": "1.0.0",
   "description": "",
-  "type" : "module",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "express-fileupload": "^1.3.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.17.0"
