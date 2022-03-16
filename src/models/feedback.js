@@ -21,11 +21,6 @@ export default function (sequelize) {
 			allowNull: false
 		},
 
-		feedback_category: {
-			type: DataTypes.STRING(50),
-			allowNull: false
-		},
-
 		feedback_status: {
 			type: DataTypes.STRING(50),
 			defaultValue: 'Planned'
@@ -36,6 +31,10 @@ export default function (sequelize) {
 			defaultValue: 0
 		}
 	}, { sequelize, tableName: 'feedbacks' })
+
+	sequelize.models.Feedback.belongsTo(sequelize.models.Category, {
+		foreignKey: 'category_id'
+	})
 
 	return Feedback;
 }

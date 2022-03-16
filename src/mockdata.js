@@ -1,5 +1,37 @@
 export default async function (sequelize) {
 
+
+	const categories = await sequelize.models.Category.build([
+		{
+			category_name: 'Feature'
+		},
+
+		{
+			category_name: 'UX'
+		},
+
+		{
+			category_name: 'Backend'
+		},
+
+		{
+			category_name: 'Enhancement'
+		},
+
+		{
+			category_name: 'UI'
+		},
+
+		{
+			category_name: 'Frontend'
+		},
+
+		{
+			category_name: 'Bug'
+		}
+
+	])
+
 	const users = await sequelize.models.User.build([
 		{ 
 			name: 'Dilshod',
@@ -25,14 +57,14 @@ export default async function (sequelize) {
 		{
 			feedback_title: 'Pointer fixed',
 			feedback_description: 'Goods',
-			feedback_category: 'UX',
-			feedback_like: 3
+			feedback_like: 3,
+			category_id: 1,
 		},
 		{
 			feedback_title: 'Header fixed',
 			feedback_description: 'bad',
-			feedback_category: 'Bug',
-			feedback_status: 'In Progress'
+			feedback_status: 'In Progress',
+			category_id: 7
 
 		}
 	])
@@ -43,6 +75,7 @@ export default async function (sequelize) {
 
 	])
 
+	await Promise.all(categories.map(async category => await category.save()))
 	await Promise.all(users.map(async user => await user.save()))
 	await Promise.all(feedbacks.map(async feedback => await feedback.save()))
 	await Promise.all(comments.map(async comment => await comment.save()))

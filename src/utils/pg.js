@@ -25,7 +25,7 @@ async function dbConnection (){
 	})
 
 	// create or delete tables
-	await sequelize.sync({ force: true })
+	await sequelize.sync()
 }
 
 

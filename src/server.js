@@ -5,13 +5,14 @@ import fileUpload from 'express-fileupload'
 const PORT = process.env.PORT || 5000
 
 
+import categoryRouter from './routers/category.js'
 import userRouter from './routers/user.js'
 import feedbackRouter from './routers/feedback.js'
 import commentRouter from './routers/comment.js'
 
 !async function () {
 	await dbConnection()
-	await mockDataFunction(sequelize)
+	// await mockDataFunction(sequelize)
 
 	const app = express()
 
@@ -20,9 +21,11 @@ import commentRouter from './routers/comment.js'
 	
 	await app.use((req, res, next) => {
 		req.models = sequelize.models
+		req.sequelize = sequelize
 		return next()
 	})
 
+	app.use('/categories', categoryRouter)
 	app.use('/users', userRouter)
 	app.use('/feedbacks', feedbackRouter)
 	app.use('/comments', commentRouter)
