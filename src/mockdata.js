@@ -63,7 +63,7 @@ export default async function (sequelize) {
 		{
 			feedback_title: 'Header fixed',
 			feedback_description: 'bad',
-			feedback_status: 'In Progress',
+			feedback_status: 2,
 			category_id: 7
 
 		}

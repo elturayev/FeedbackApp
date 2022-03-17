@@ -1,7 +1,12 @@
-const GET = async (request, response) => {
+import ClientError from '../utils/error.js'
+
+
+const GET = async (request, response, next) => {
 	try {
+		const { feedback_id } = request.params
 		response.json(
 			await request.models.Comment.findAll({ 
+				where: feedback_id ? {feedback_id } : {},
 				include: [
 					{
 						model:request.models.User,
@@ -11,15 +16,18 @@ const GET = async (request, response) => {
 						model:request.models.Feedback
 					}],
 
-				attributes:['comment_id','comment_text','createdAt'] })
+				attributes:['comment_id','comment_text','createdAt'],
+			})
 		)
+
+		return next()
 	} catch(error) {
-		console.log(error)
+		return next(error)
 	}
 }
 
 
-const POST = async (request, response) => {
+const POST = async (request, response, next) => {
 	try {
 		const { comment_text, feedback_id, user_id } = request.body
 
@@ -41,16 +49,11 @@ const POST = async (request, response) => {
 				message: 'Comment successfully added!',
 				data: res.dataValues
 			})
-		} else {
-			response.json({
-				status: 400,
-				message: 'Comment successfully added!',
-				data: res.dataValues
-			})
-		}
+		} else throw new ClientError(400, 'Comment successfully added!')
 
+		return next()
 	} catch(error) {
-		console.log(error)
+		return next(error)
 	}
 }
 

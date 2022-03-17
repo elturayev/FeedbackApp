@@ -22,8 +22,8 @@ export default function (sequelize) {
 		},
 
 		feedback_status: {
-			type: DataTypes.STRING(50),
-			defaultValue: 'Planned'
+			type: DataTypes.INTEGER,
+			defaultValue: 1
 		},
 
 		feedback_like: {

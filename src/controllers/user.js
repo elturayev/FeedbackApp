@@ -1,17 +1,21 @@
-const GET = async (request, response) => {
+import ClientError from '../utils/error.js'
+
+const GET = async (request, response, next) => {
 	try {
 		response.json(
 			await request.models.User.findAll({
 				attributes: ['user_id','name','username','user_profile_img','role']
 			})
 		)
+
+		return next()
 	} catch(error){
-		console.log(error)
+		return next(error)
 	}
 }
 
 
-const POST = async (request, response) => {
+const POST = async (request, response, next) => {
 	try {
 		if(!request.files) return;
 
@@ -39,16 +43,11 @@ const POST = async (request, response) => {
 				message: 'User successfully registered!',
 				data: res.dataValues
 			})
-		} else {
-			response.json({
-				status: 400,
-				message: 'User not successfully registered!',
-				data: null
-			})
-		}
-
+		} else throw new ClientError(400,'User not successfully registered!')
+			
+		return next()
 	} catch(error) {
-		console.log(error)
+		return next(error)
 	}
 }
 
