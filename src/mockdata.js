@@ -37,19 +37,19 @@ export default async function (sequelize) {
 			name: 'Dilshod',
 		  	username: '@dilshod', 
 		  	password: '1111',
-		  	user_profile_img: 'rasm.jpg'
+		  	user_profile_img: 'love.jpg'
 		},
 		{ 
 			name: 'Dostonbek',
 		  	username: '@dosya', 
 		  	password: '020330',
-		  	user_profile_img: 'rasm1.jpg'
+		  	user_profile_img: 'nature.jpg'
 		},
 		{ 
 			name: 'Bahodir',
 		  	username: '@bahodir', 
 		  	password: '7777',
-		  	user_profile_img: 'rasm3.jpg'
+		  	user_profile_img: 'metting.jpg'
 		}
 	])
 	

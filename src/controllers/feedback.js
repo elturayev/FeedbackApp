@@ -84,6 +84,7 @@ const POST =  async (request, response, next) => {
 
 		const feedBack = Feedback.build(newFeedback)
 		const res = await feedBack.save()
+		
 		if(res.dataValues){
 			response.json({
 				status: 201,
