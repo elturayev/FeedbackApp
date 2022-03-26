@@ -2,33 +2,19 @@ export default async function (sequelize) {
 
 
 	const categories = await sequelize.models.Category.build([
-		{
-			category_name: 'Feature'
-		},
+		{ category_name: 'Feature' },
 
-		{
-			category_name: 'UX'
-		},
+		{ category_name: 'UX' },
 
-		{
-			category_name: 'Backend'
-		},
+		{ category_name: 'Backend' },
 
-		{
-			category_name: 'Enhancement'
-		},
+		{ category_name: 'Enhancement' },
 
-		{
-			category_name: 'UI'
-		},
+		{ category_name: 'UI' },
 
-		{
-			category_name: 'Frontend'
-		},
+		{ category_name: 'Frontend' },
 
-		{
-			category_name: 'Bug'
-		}
+		{ category_name: 'Bug' }
 
 	])
 
@@ -39,12 +25,14 @@ export default async function (sequelize) {
 		  	password: '1111',
 		  	user_profile_img: 'love.jpg'
 		},
+
 		{ 
 			name: 'Dostonbek',
 		  	username: '@dosya', 
 		  	password: '020330',
 		  	user_profile_img: 'nature.jpg'
 		},
+
 		{ 
 			name: 'Bahodir',
 		  	username: '@bahodir', 
@@ -60,6 +48,7 @@ export default async function (sequelize) {
 			feedback_like: 3,
 			category_id: 1,
 		},
+		
 		{
 			feedback_title: 'Header fixed',
 			feedback_description: 'bad',

@@ -39,7 +39,7 @@ import commentRouter from './routers/comment.js'
 			return response.status(error.status).send(error)
 		}
 		else {
-			return response.send(error)
+			return response.send(error.message)
 		}
 	})
 

@@ -4,17 +4,9 @@ import { Op } from '@sequelize/core'
 
 const GET = async (request, response, next) => {
 	try {
-		const { 
-			Feature = '',
-			UX = '',
-			Backend = '',
-			Enhancement = '',
-			UI = '',
-			Frontend = '',
-			Bug = '' ,
-		} = request.query
-		response.json(
-			await request.sequelize.query(`
+		const { category,sorting } = request.query
+		
+		let feedbacks = await request.sequelize.query(`
 				SELECT 
 					f.*,
 					c.category_name,
@@ -22,47 +14,55 @@ const GET = async (request, response, next) => {
 				FROM feedbacks as f
 				LEFT JOIN categories as c on c.category_id = f.category_id
 				LEFT JOIN comments as com on com.feedback_id = f.feedback_id
-				WHERE
-				CASE
-					WHEN length($Feature) > 0 THEN c.category_name = $Feature
-					ELSE true
-				END AND
-				CASE
-					WHEN length($UX) > 0 THEN c.category_name = $UX
-					ELSE true
-				END AND
-				CASE
-					WHEN length($Backend) > 0 THEN c.category_name = $Backend
-					ELSE true
-				END AND
-				CASE
-					WHEN length($Enhancement) > 0 THEN c.category_name = $Enhancement
-					ELSE true
-				END AND
-				CASE
-					WHEN length($UI) > 0 THEN c.category_name = $UI
-					ELSE true
-				END AND
-				CASE
-					WHEN length($Frontend) > 0 THEN c.category_name = $Frontend
-					ELSE true
-				END AND
-				CASE
-					WHEN length($Bug) > 0 THEN c.category_name = $Bug
-					ELSE true
-				END 
-				GROUP BY f.feedback_id, c.category_name
-				;
-			`, { type: QueryTypes.SELECT,
-				bind: { Feature,
-						UX,
-						Backend,
-						Enhancement,
-						UI,
-						Frontend,
-						Bug ,
-					} })
-		)
+				GROUP BY f.feedback_id, c.category_name;
+			`, { type: QueryTypes.SELECT })
+		
+		
+		if (category == 'Feature') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'UX') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'Backend') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'Enhancement') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'UI') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'Frontend') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (category == 'Bug') {
+			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+		}
+
+		if (sorting == 'mostC') {
+			feedbacks.sort((a, b) => b.comment_count - a.comment_count)
+		}
+
+		if (sorting == 'leastC'){
+			feedbacks.sort((a, b) => a.comment_count - b.comment_count)
+		}
+
+		if (sorting == 'leastL') {
+			feedbacks.sort((a, b) => a.feedback_like - b.feedback_like )
+		}
+
+		else {
+			feedbacks.sort((a, b) => b.feedback_like - a.feedback_like )
+		}
+
+		response.json(feedbacks)
 
 		return next()
 	} catch(error) {
