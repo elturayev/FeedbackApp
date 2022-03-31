@@ -1,13 +1,7 @@
 import { Sequelize } from 'sequelize'
 import models from '../models/index.js' 
 
-const sequelize = new Sequelize({
-	username: 'postgres',
-	database: 'feedback_db',
-	password: '1111',
-	dialect: 'postgres',
-	logging: false
-})
+const sequelize = new Sequelize('postgres://mlnskpux:37WUQzFF9jQ6d5mjUWGZx3Fb0upyGXYF@john.db.elephantsql.com/mlnskpux',{ logging: false })
 
 
 async function dbConnection (){
