@@ -5,7 +5,6 @@ import { Op } from '@sequelize/core'
 const GET = async (request, response, next) => {
 	try {
 		const { category,sorting } = request.query
-		
 		let feedbacks = await request.sequelize.query(`
 				SELECT 
 					f.*,
@@ -16,50 +15,62 @@ const GET = async (request, response, next) => {
 				LEFT JOIN comments as com on com.feedback_id = f.feedback_id
 				GROUP BY f.feedback_id, c.category_name;
 			`, { type: QueryTypes.SELECT })
-		
-		
+
+		let active = false;
+
 		if (category == 'Feature') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'UX') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'Backend') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'Enhancement') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'UI') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'Frontend') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (category == 'Bug') {
 			feedbacks = feedbacks.filter((feedback) => feedback.category_name == category)
+			active = true
 		}
 
 		if (sorting == 'mostC') {
-			feedbacks.sort((a, b) => b.comment_count - a.comment_count)
+			feedbacks.sort((a, b) => (b.comment_count) - (a.comment_count))
+			active = true
 		}
 
 		if (sorting == 'leastC'){
 			feedbacks.sort((a, b) => a.comment_count - b.comment_count)
+			active = true
 		}
 
 		if (sorting == 'leastL') {
 			feedbacks.sort((a, b) => a.feedback_like - b.feedback_like )
+			active = true
 		}
 
-		else {
+		if (!active) {
 			feedbacks.sort((a, b) => b.feedback_like - a.feedback_like )
+			active = true
 		}
 
 		response.json(feedbacks)
