@@ -13,7 +13,14 @@ const GET = async (request, response, next) => {
 						attributes:['user_id','name','username','user_profile_img','role']
 					},
 					{
-						model:request.models.Feedback
+						model:request.models.Feedback,
+						attributes: ['feedback_id', 'feedback_title', 'feedback_description', 'feedback_status', 'feedback_like'],
+						include: [
+							{
+								model:request.models.Category,
+								attributes: ['category_id', 'category_name']
+							}
+						]
 					}],
 
 				attributes:['comment_id','comment_text','createdAt'],
