@@ -6,7 +6,7 @@ const router = Router()
 router.get('/',controller.GET)
 router.post('/',controller.POST)
 router.put('/',controller.PUT)
-router.delete('/',controller.DELETE)
+router.delete('/:feedback_id',controller.DELETE)
 
 
 export default router;
