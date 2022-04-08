@@ -165,23 +165,38 @@ const PUT = async (request, response, next) => {
 const DELETE = async (request, response, next) => {
 	try {
 
-		const { feedback_title, feedback_status, category_id } = request.body
+		const { feedback_id } = request.params
 
 		const Feedback = request.models.Feedback
+		const Comment = request.models.Comment
 
-		const data = await Feedback.destroy({
+
+		const feedback = await Feedback.findOne({
 			where: {
-				feedback_title: { [Op.iLike]: ('%' + feedback_title + '%') },
-				feedback_status: { [Op.eq]: feedback_status },
-				category_id: { [Op.eq]: category_id }
+				feedback_id
 			}
 		})
 
-		if(data){
-			response.json({
-				status: 200,
-				message: 'Feedback successfully deleted!'
+		if(feedback.feedback_id) {
+
+			const comments = await Comment.destroy({
+				where: {
+					feedback_id
+				}
 			})
+
+			const resultDel = await Feedback.destroy({
+				where: {
+					feedback_id
+				}
+			}) 
+
+			if(resultDel){
+				response.json({
+					status: 200,
+					message: 'Feedback successfully deleted!'
+				})
+			}
 		}
 
 		return next()
