@@ -3,6 +3,8 @@ import mockDataFunction from './mockdata.js'
 import express from 'express'
 import fileUpload from 'express-fileupload'
 import path from 'path'
+import cors from 'cors'
+
 
 const PORT = process.env.PORT || 5000
 
@@ -17,8 +19,9 @@ import commentRouter from './routers/comment.js'
 
 	const app = express()
 
-	app.use(express.json())
+	app.use(cors())
 	app.use(fileUpload())
+	app.use(express.json())
 	
 	app.use(express.static(path.join(process.cwd(), 'src', 'files')))
 
